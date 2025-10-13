@@ -20,5 +20,4 @@ model RobotHistory {
   x         Int
   y         Int
   created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
 }
