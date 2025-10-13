@@ -12,7 +12,6 @@ export class RobotHistoryService {
     createRobotHistoryDto: CreateRobotHistoryDto,
   ): Promise<RobotHistory> {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
       return await this.prismaService.robotHistory.create({
         data: { ...createRobotHistoryDto },
       });
@@ -24,7 +23,6 @@ export class RobotHistoryService {
   // get all records/movement's history from db:
   async findAll(): Promise<RobotHistory[]> {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return
       return await this.prismaService.robotHistory.findMany();
     } catch (error) {
       throw new Error('Failed to get all robot history due to: ' + error);
@@ -32,8 +30,18 @@ export class RobotHistoryService {
   }
 
   // find most recent recod/move info:
-  findOne(id: number) {
-    return `This action returns a #${id} robotHistory`;
+  async findOne(): Promise<any> {
+    try {
+      return await this.prismaService.robotHistory.findFirst({
+        orderBy: {
+          created_at: 'desc',
+        },
+      });
+    } catch (error) {
+      throw new Error(
+        'Failed to get most recent robot history due to: ' + error,
+      );
+    }
   }
 
   // update(id: number, updateRobotHistoryDto: UpdateRobotHistoryDto) {

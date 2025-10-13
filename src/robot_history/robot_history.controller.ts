@@ -25,9 +25,9 @@ export class RobotHistoryController {
     return this.robotHistoryService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.robotHistoryService.findOne(+id);
+  @Get('latest')
+  findOne() {
+    return this.robotHistoryService.findOne();
   }
 
   // @Patch(':id')
