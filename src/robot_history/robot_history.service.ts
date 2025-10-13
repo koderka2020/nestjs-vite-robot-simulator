@@ -49,7 +49,12 @@ export class RobotHistoryService {
   // }
 
   // delete history of robot's movements
-  remove(id: number) {
-    return `This action removes a #${id} robotHistory`;
+  async remove() {
+    try {
+      await this.prismaService.robotHistory.deleteMany();
+    } catch (error) {
+      throw new Error('Failed to remove all robot history due to: ' + error);
+    }
+    return `This action removes all robot's movement history`;
   }
 }

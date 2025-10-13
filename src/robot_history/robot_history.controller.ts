@@ -35,8 +35,8 @@ export class RobotHistoryController {
   //   return this.robotHistoryService.update(+id, updateRobotHistoryDto);
   // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.robotHistoryService.remove(+id);
+  @Delete()
+  remove() {
+    return this.robotHistoryService.remove();
   }
 }
