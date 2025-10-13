@@ -1,13 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRobotHistoryDto } from './dto/create-robot_history.dto';
 // import { UpdateRobotHistoryDto } from './dto/update-robot_history.dto';
+import { PrismaService } from '../prisma/prisma.service';
+import { RobotHistory } from '@prisma/client';
 
 @Injectable()
 export class RobotHistoryService {
+  constructor(private readonly prismaService: PrismaService) {}
   // create record in db for every robot's movement:
-  create(createRobotHistoryDto: CreateRobotHistoryDto) {
-    console.log(createRobotHistoryDto);
-    return 'This action adds a new robotHistory';
+  async create(
+    createRobotHistoryDto: CreateRobotHistoryDto,
+  ): Promise<RobotHistory> {
+    try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+      return await this.prismaService.robotHistory.create({
+        data: { ...createRobotHistoryDto },
+      });
+    } catch (error) {
+      throw new Error('Failed to create robot history due to: ' + error);
+    }
   }
 
   // get all records/movement's history from db:
