@@ -1,6 +1,6 @@
 // import { useState } from 'react'
 import './App.css'
-import Tabletop from './Tabletop'
+import Tabletop from './components/Tabletop'
 
 function App() {
   // const [count, setCount] = useState(0)
