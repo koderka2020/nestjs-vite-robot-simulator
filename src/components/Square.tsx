@@ -1,7 +1,9 @@
-export default function Square({ saveMove, robot, y, x }: { saveMove: (newState: { direction: string; x: number; y: number }) => void, robot: { direction: string}, y: number, x: number}) {   
+export default function Square({ saveMove, dropHistory, robot, y, x }:{ saveMove: (newState: { direction: string; x: number; y: number }) => void, dropHistory: () => void, robot: { direction: string}, y: number, x: number}) {   
   
   const updateState = () => {
     const newState = { direction: robot.direction, x: x, y: y };
+    //when user clicks on the tabletop, drop the history of the most recent robot and save position of the new robot
+    dropHistory()
     saveMove(newState);
   }
 
