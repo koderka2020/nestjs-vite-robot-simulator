@@ -58,7 +58,10 @@ function Tabletop() {
     fetch('http://localhost:3000/api/robot-history', {
       method: 'DELETE',
     })
-      .then(() => saveMove(newState))
+      .then(() => {
+        const resetingDir = { ...newState, direction: 'north'}
+        saveMove(resetingDir)
+      })
   }
     
   return (
