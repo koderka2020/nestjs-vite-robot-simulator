@@ -17,21 +17,28 @@ function MoveButton({buttonName, robot, saveMove}: {buttonName: string, robot: {
     }
     
     let validMove = false
+    const newState: { direction?: string; x?: number; y?: number } = {}
+
     if ( buttonName == 'Up' && robot.y < 4 ){
+      newState.y = robot.y + 1
       validMove = true
     }
     if ( buttonName == 'Down' && robot.y > 0 ){
+      newState.y = robot.y - 1
       validMove = true
     }
     if ( buttonName == 'Left' && robot.x > 0 ){
+      newState.x = robot.x - 1
       validMove = true
     }
     if ( buttonName == 'Right' && robot.x < 4){
+      newState.x = robot.x + 1
       validMove = true
     }
     
     if (validMove) {
-      saveMove({ direction: buttonName.toLowerCase() });
+      newState.direction = buttonName.toLowerCase()
+      saveMove(newState);
     } else {
       warningInvalidMove()
     }
@@ -42,7 +49,7 @@ function MoveButton({buttonName, robot, saveMove}: {buttonName: string, robot: {
   return (
     <button 
       onClick={updateState} 
-      className={`bg-gray-800 rounded-md ${warning ? 'px-2 py-2' : 'px-7 py-2'}`}>
+      className={`bg-gray-800 rounded-md ${warning ? 'px-2 py-2 text-shadow-red-600' : 'px-7 py-2'}`}>
         {buttonMessage}
     </button>
   )
