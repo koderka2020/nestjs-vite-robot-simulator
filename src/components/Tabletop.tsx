@@ -70,14 +70,14 @@ function Tabletop() {
         {Array.from({ length: SIZE }, (_, idx) => (
           <div key={idx} className="flex flex-row">
           {Array.from({ length: SIZE }, (_, index) => (
-            <Square key={index} dropHistory={dropHistory} y={index} x={idx}/>
+            <Square key={index} dropHistory={dropHistory} y={idx} x={index}/>
           ))}
           </div>
         ))}
       </div>
     <div className="grid grid-cols-4 gap-5">
       {ALLOWED_MOVES.map((move, idx) => (
-        <MoveButton key={idx} saveMove={saveMove} buttonName={move}/>
+        <MoveButton key={idx} saveMove={saveMove} buttonName={move} robot={robot}/>
       ))}
      <ReportButton robot={robot}/>
     </div>
