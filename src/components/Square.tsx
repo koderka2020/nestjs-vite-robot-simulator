@@ -11,7 +11,7 @@ export default function Square({ robot, dropHistory, y, x }:{ robot: { direction
   const isRobotHere = robot.x === x && robot.y === y;
 
   return (
-    <button onClick={updateState} className="w-20 h-20 bg-gray-800 text-blue-500 p-2 border border-solid border-gray-500 flex-shrink-0 relative">
+    <button onClick={updateState} className="w-25 h-25 bg-gray-800 text-blue-500 p-3 border border-solid border-gray-500 flex-shrink-0 relative">
       {isRobotHere && <Robot direction={robot.direction || 'up'}/>}
     </button>
 )

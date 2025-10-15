@@ -3,9 +3,10 @@ import Square from './Square';
 import ReportButton from './buttons/ReportButton'
 import MoveButton from './buttons/MoveButton';
 
-// variable for the number of squares on the tabletop
+// variables
 const SIZE = 5;
 const ALLOWED_MOVES = [ 'Left', 'Right', 'Up', 'Down']
+
 
 function Tabletop() {
   const [robot, setRobot] = useState<{
@@ -66,9 +67,9 @@ function Tabletop() {
     
   return (
     <div className=" h-screen flex flex-col items-center justify-center">
-    <div className="bg-gray-800 rounded-md px-5 py-3 "> 
-      Click on the table to place the robot, use the buttons or arrows to move the robot
-    </div>
+      <div className="bg-gray-800 rounded-md px-5 py-3 "> 
+        Click on the table to place the robot, use the buttons or arrows to move the robot
+      </div>
       <div className="flex flex-col-reverse m-7">
         {Array.from({ length: SIZE }, (_, idx) => (
           <div key={idx} className="flex flex-row">
