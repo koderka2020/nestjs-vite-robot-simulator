@@ -5,7 +5,11 @@ import Square from './Square';
 const SIZE = 5;
 
 function Tabletop() {
-  const [robot, setRobot] = useState({
+  const [robot, setRobot] = useState<{
+    direction: string;
+    x?: number;
+    y?: number;
+  }>({
     direction: 'north',
     x: undefined,
     y: undefined
@@ -19,33 +23,38 @@ function Tabletop() {
   }, []);
 
 
-  const saveMove = async(event: { preventDefault: () => void; }) => { 
-    event.preventDefault();
+  const saveMove = async(newState: { direction: string; x: number; y: number }) => { 
     try {
       fetch('http://localhost:3000/api/robot-history', {
         method: 'POST',
-        body: JSON.stringify(robot),
+        body: JSON.stringify(newState),
         headers: {
           'Content-Type': 'application/json'
         }
       })
         .then(response => response.json())
-        .then(data => console.log(data))
+        .then(data => {
+          console.log(data);
+          setRobot(newState);
+        })
         .catch(error => console.error('Error:', error));
    } catch (error) {
     console.error('Error:', error);
    }
-
     }
     
   return (
     <div className="h-screen flex content-center justify-center items-center">
-      <div className="grid grid-cols-5">
-        {Array.from({ length: SIZE * SIZE }, (_, index) => (
-          <Square key={index} saveMove={saveMove} robot={robot}/>
+      <div className="flex flex-col-reverse m-8">
+        {Array.from({ length: SIZE }, (_, idx) => (
+          <div key={idx} className="flex flex-row">
+          {Array.from({ length: SIZE }, (_, index) => (
+            <Square key={index} saveMove={saveMove} robot={robot} y={idx} x={index}/>
+          ))}
+          </div>
         ))}
       </div>
-  </div>
+    </div>
   )
 }
 
