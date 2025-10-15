@@ -49,7 +49,7 @@ function MoveButton({buttonName, robot, saveMove}: {buttonName: string, robot: {
   return (
     <button 
       onClick={updateState} 
-      className={`bg-cyan-700 text-gray-900 rounded-md ${warning ? 'px-2 py-2 bg-red-500' : 'px-7 py-2'}`}>
+      className={`bg-cyan-600 text-gray-900 rounded-md ${warning ? 'px-2 py-2 bg-red-500' : 'px-7 py-2'}`}>
         {buttonMessage}
     </button>
   )

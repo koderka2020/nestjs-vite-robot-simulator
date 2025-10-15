@@ -13,7 +13,7 @@ function Tabletop() {
     x?: number;
     y?: number;
   }>({
-    direction: 'north',
+    direction: 'up',
     x: undefined,
     y: undefined
   });
@@ -59,7 +59,7 @@ function Tabletop() {
       method: 'DELETE',
     })
       .then(() => {
-        const resetingDir = { ...newState, direction: 'north'}
+        const resetingDir = { ...newState, direction: 'up'}
         saveMove(resetingDir)
       })
   }
