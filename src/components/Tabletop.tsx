@@ -25,39 +25,40 @@ function Tabletop() {
   const getLatestPosition = async () => {
     fetch('http://localhost:3000/api/robot-history/latest')
       .then(response => response.json())
-      .then(data => setRobot(data))
+      .then(data => setRobot({
+        direction: data.direction,
+        x: data.x,
+        y: data.y,
+      }))
       .catch(error => console.error('Error:', error));
   }
 
   const saveMove = async(newState: { direction?: string; x?: number; y?: number }) => { 
+    const update = {
+        ...robot,
+        ...newState,
+      }
+    setRobot(prev => ({...prev, ...update}))
     try {
-      fetch('http://localhost:3000/api/robot-history', {
+      const response = await fetch('http://localhost:3000/api/robot-history', {
         method: 'POST',
-        body: JSON.stringify(newState),
+        body: JSON.stringify(update),
         headers: {
           'Content-Type': 'application/json'
         }
-      })
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-          setRobot(prevState => ({
-            ...prevState,
-            ...newState
-          }));
-        })
-        .catch(error => console.error('Error:', error));
-   } catch (error) {
-    console.error('Error:', error);
-   }
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
     }
 
-  const dropHistory = async () => {
+  const dropHistory = async (newState: { x?: number; y?: number }) => {
     fetch('http://localhost:3000/api/robot-history', {
       method: 'DELETE',
     })
-      .then(response => response.json())
-      .then(data => console.log(data))
+      .then(() => saveMove(newState))
   }
     
   return (
@@ -69,7 +70,7 @@ function Tabletop() {
         {Array.from({ length: SIZE }, (_, idx) => (
           <div key={idx} className="flex flex-row">
           {Array.from({ length: SIZE }, (_, index) => (
-            <Square key={index} saveMove={saveMove} dropHistory={dropHistory} y={idx} x={index}/>
+            <Square key={index} dropHistory={dropHistory} y={index} x={idx}/>
           ))}
           </div>
         ))}

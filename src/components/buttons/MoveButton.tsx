@@ -1,8 +1,7 @@
 function MoveButton({buttonName, saveMove}: {buttonName: string, saveMove: (newState: { direction?: string; x?: number; y?: number }) => void}) {
   
   const updateState = () => {
-    const newState = { direction: buttonName };
-    saveMove({...newState});
+    saveMove({ direction: buttonName });
   }
   
   return (
