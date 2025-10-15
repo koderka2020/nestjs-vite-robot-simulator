@@ -73,7 +73,7 @@ function Tabletop() {
         {Array.from({ length: SIZE }, (_, idx) => (
           <div key={idx} className="flex flex-row">
           {Array.from({ length: SIZE }, (_, index) => (
-            <Square key={index} dropHistory={dropHistory} y={idx} x={index}/>
+            <Square key={index} robot={robot} dropHistory={dropHistory} y={idx} x={index}/>
           ))}
           </div>
         ))}
