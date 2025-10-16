@@ -1,4 +1,4 @@
-# Toy Robot Simulator – Technical Documentation
+# Toy Robot Simulator
 
 ## Overview
 The Toy Robot Simulator is a web application that simulates a robot moving on a 5×5 tabletop grid. The app follows predefined movement rules and stores the robot’s state in a SQLite database. This project demonstrates clean application architecture, maintainability, and test coverage.
@@ -33,23 +33,6 @@ The Toy Robot Simulator is a web application that simulates a robot moving on a 
 
 ---
 
-### Constraints
-- Robot cannot leave the grid.
-- Clicking outside the grid is ignored.
-- Placing a new robot **overwrites** the previous one.
-- Data Persistence:
-  - Current robot state (position + direction) is stored in **SQLite (via Prisma)**.
-  - Robot state is **restored on page reload**.
-  - **Movement history** is saved for the current robot.
-
----
-
-## Assumptions & Design Decisions
-- Replaced default `LEFT/RIGHT/MOVE` buttons with **directional arrows** for better UX.
-- Only **current robot movement history is saved** => Placing a new robot **resets history**.
-- Robot's design isn't 100% accurate - used icon from react library.
----
-
 ## Example
 Input
 ```
@@ -62,18 +45,41 @@ Output
 ```
 0,1,NORTH
 ```
+---
+
+### Constraints
+- Robot cannot leave the grid.
+- Clicking outside the grid is ignored.
+- Placing a new robot **overwrites** the previous one.
+- Data Persistence:
+  - Current robot state (position + direction) is stored in **SQLite (via Prisma)**.
+  - Robot state is **restored on page reload**.
+  - **Movement history** is saved for the current robot.
+
+---
+
+## Assumptions & Design Decisions
+- Only **current robot movement history is saved** => Placing a new robot **resets history**.
+- Robot's design isn't 100% accurate - in this project was used icon from react library.
+- "Left" button moves arrow counter-clockwise and "Right" button moves arrow clockwise.
+- Improved user experience and accessibility by addition of "click" sound to all clickable components.
+- Considered but opted out of implementing due to small size of the project and time restrictions.
 
 ---
 
 ## Future Enhancements (Post-MVP)
-- Support **multiple robots**
+### Technical
 - Better **state management** (use React Context API)
+- Increase test coverage
 - **Responsive UI**
+
+### Functional
 - Custom robot name & color
-- Select robot icon from UI library
-- Improved test coverage
+- Select robot icon from UI "robot store" displayed left or right from the tabletop 
+- Replace default `LEFT/RIGHT/MOVE` buttons with **directional arrows** for better UX
 - Display full movement history
 - Add grid obstacles
+- Support **multiple robots**
 
 ---
 
@@ -109,18 +115,18 @@ npm install
 
 # Setup database
 # Add to your .env within robot-simulator-be directory:    DATABASE_URL="file:./dev.db"
-
+npm prisma migrate dev
 npm prisma generate
 
-# Start backend from the robot-simulator-be directory
+# Start backend from the root of robot-simulator-be directory
 npm run start:dev
 
-# Start frontend from the robot-simulator-fe directory
+# Start frontend from the root of robot-simulator-fe directory
 npm run dev
 
 App available at: http://localhost:5173
 
-# Start both from the root
+# Start both from the root of nestjs-vite-robot-simulator 
 npm run dev
 ```
 
@@ -129,7 +135,6 @@ npm run dev
 ```
 npm prisma studio
 ```
-
 - Opens Prisma Studio at http://localhost:5555
 
 ---
@@ -165,7 +170,7 @@ npm test
 
 - Click a grid cell → robot appears
 
-- Use arrow buttons → robot stays inside grid
+- Use Left/Right/Move buttons → robot stays inside grid
 
 - Refresh → robot state persists
 

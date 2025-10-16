@@ -1,8 +1,14 @@
+import { useRef } from 'react';
 import Robot from './Robot'
+import clickSound from '../assets/sounds/click.wav'
 
 export default function Square({ robot, dropHistory, y, x }:{ robot: { direction?: string; x?: number; y?: number }, dropHistory: (newState: { x?: number; y?: number }) => void, y: number, x: number}) {   
-  
+  const clickSoundRef = useRef(new Audio(clickSound))
+
   const updateState = () => {
+    if (clickSoundRef.current) {
+      clickSoundRef.current.play()
+    }
     const newState = { x: x, y: y };
     //when user clicks on the tabletop, drop the history of the most recent robot and save position of the new robot
     dropHistory(newState)

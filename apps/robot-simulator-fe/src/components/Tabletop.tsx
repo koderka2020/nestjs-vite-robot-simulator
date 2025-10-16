@@ -3,10 +3,10 @@ import Square from './Square';
 import ReportButton from './buttons/ReportButton'
 import MoveButton from './buttons/MoveButton';
 import ResetButton from './buttons/ResetButton';
+import DirectionButton from './buttons/DirectionButton';
 
 // variables
 const SIZE = 5;
-const ALLOWED_MOVES = [ 'Left', 'Right', 'Up', 'Down']
 
 
 function Tabletop() {
@@ -29,10 +29,9 @@ function Tabletop() {
 
       const validMove = validateMove(event.key as string)
       if (!validMove) {
-        //here would go code for warning pop-up message, navigating player to click on the table
+        //here will go code for warning pop-up message, navigating player to click on the table
        console.log('Invalid move!')
       }
-
     };
 
     window.addEventListener('keydown', handleKeyPress);
@@ -54,29 +53,24 @@ function Tabletop() {
   }
 
   const validateMove = (dir:string) => {
-    console.log('dir:', dir);
     let validMove = false
     const newState: { direction?: string; x?: number; y?: number } = {...robot}
-
+    console.log('robot:', robot);
     if (robot.y === undefined || robot.x === undefined) return false;
-    if ( (dir == 'Up' || dir == 'ArrowUp') && robot.y < 4 ){
+    if ( (dir == 'up' || dir == 'ArrowUp') && robot.y < 4 ){
       newState.y = robot.y + 1
-      newState.direction = 'up'
       validMove = true
     }
-    if ( (dir == 'Down' || dir == 'ArrowDown' )&& robot.y > 0 ){
+    if ( (dir == 'down' || dir == 'ArrowDown' )&& robot.y > 0 ){
       newState.y = robot.y - 1
-      newState.direction = 'down'
       validMove = true
     }
-    if (( dir == 'Left' || dir == 'ArrowLeft' )&& robot.x > 0 ){
+    if (( dir == 'left' || dir == 'ArrowLeft' )&& robot.x > 0 ){
       newState.x = robot.x - 1
-      newState.direction = 'left'
       validMove = true
     }
-    if ( (dir == 'Right' || dir == 'ArrowRight' )&& robot.x < 4){
+    if ( (dir == 'right' || dir == 'ArrowRight' )&& robot.x < 4){
       newState.x = robot.x + 1
-      newState.direction = 'right'
       validMove = true
     }
 
@@ -87,8 +81,12 @@ function Tabletop() {
     return validMove
   }
 
+  const updateDirection = (direction: {direction?: string}) => {
+    const newState = { ...robot, ...direction }
+    setRobot(newState)
+  }
+
   const saveMove = async(newState: { direction?: string; x?: number; y?: number }) => { 
-    
     const update = {
         ...robot,
         ...newState,
@@ -137,16 +135,15 @@ function Tabletop() {
           </div>
         ))}
       </div>
-    <div className="grid grid-cols-4 gap-5">
-      {ALLOWED_MOVES.map((move, idx) => (
-        <MoveButton key={idx} validateMove={validateMove} buttonName={move}/>
-      ))}
-     <ReportButton robot={robot}/>
-     <ResetButton dropHistory={dropHistory}/>
+    <div className="grid grid-cols-3 gap-5">
+    <DirectionButton  updateDirection={updateDirection} buttonName="Left" y={robot.y} direction={robot.direction}/>
+    <MoveButton robot={robot} validateMove={validateMove} buttonName="Move"/>
+    <DirectionButton updateDirection={updateDirection} buttonName="Right" y={robot.y} direction={robot.direction}/>
+    <ReportButton robot={robot}/>
+    <ResetButton robot={robot} dropHistory={dropHistory}/>
     </div>
   </div>
   )
 }
-
 
 export default Tabletop

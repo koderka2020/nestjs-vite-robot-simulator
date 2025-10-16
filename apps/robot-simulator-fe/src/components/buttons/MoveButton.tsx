@@ -1,16 +1,18 @@
 import { useState, useRef, useEffect } from 'react'
 import clickSound from '../../assets/sounds/click.wav'
 
-function MoveButton({y, buttonName, validateMove}: {y?:number, buttonName: string, validateMove: (buttonName: string) => boolean}) {
+function MoveButton({robot, validateMove}: {robot: {x?: number, y?: number, direction?:string}, buttonName: string, validateMove: (direction: string) => boolean}) {
   const [warning, showWarning] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const clickSoundRef = useRef(new Audio(clickSound))
 
   useEffect(() => {
-    if ( y !== undefined ) {
+    if (robot.x !== undefined && robot.y !== undefined) {
       setDisabled(false)
+    } else {
+      setDisabled(true)
     }
-  }, [y])
+  }, [robot.x, robot.y, robot.direction])
 
   const warningInvalidMove = () => {
     showWarning(true)
@@ -23,15 +25,14 @@ function MoveButton({y, buttonName, validateMove}: {y?:number, buttonName: strin
     if (clickSoundRef.current) {
       clickSoundRef.current.play()
     }
-
-    const validMove = validateMove(buttonName)
+    const validMove = validateMove(robot.direction || 'up')
     console.log('validMove:', validMove);
     if (!validMove) {
       warningInvalidMove()
     }
   }
   
-  const buttonMessage = warning ? "Invalid move!" : buttonName
+  const buttonMessage = warning ? "Invalid move!" : "Move"
   
   return (
     <button 
