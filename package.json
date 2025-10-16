@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently -n BACKEND,FRONTEND -c blue,green \"pnpm --filter frontend dev\" \"pnpm --filter backend dev\""
+    "dev": "concurrently -n BACKEND,FRONTEND -c blue,green \"pnpm --filter robot-simulator-be dev\" \"pnpm --filter robot-simulator-fe dev\""
   },
   "devDependencies": {
     "concurrently": "^9.0.0"
