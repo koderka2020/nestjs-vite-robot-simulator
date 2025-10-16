@@ -10,6 +10,9 @@ function ReportButton({robot}: {robot: {direction?: string, x?: number, y?: numb
     if (clickSoundRef.current) {
       clickSoundRef.current.play()
     }
+    if (robot.x === undefined || robot.y === undefined) {
+      return
+    }
     showPosition(true)
     setTimeout(() => {
       showPosition(false)

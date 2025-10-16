@@ -23,6 +23,21 @@ function Tabletop() {
     getLatestPosition()
   }, []);
 
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+
+      const validMove = validateMove(event.key as string)
+      if (!validMove) {
+        //here would go code for warning pop-up message, navigating player to click on the table
+       console.log('Invalid move!')
+      }
+
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [robot]);
+
   const getLatestPosition = async () => {
     fetch('http://localhost:3000/api/robot-history/latest')
       .then(response => response.json())
@@ -32,6 +47,40 @@ function Tabletop() {
         y: data.y,
       }))
       .catch(error => console.error('Error:', error));
+  }
+
+  const validateMove = (dir:string) => {
+    console.log('dir:', dir);
+    let validMove = false
+    const newState: { direction?: string; x?: number; y?: number } = {}
+
+    if (robot.y === undefined || robot.x === undefined) return false;
+    if ( (dir == 'Up' || dir == 'ArrowUp') && robot.y < 4 ){
+      newState.y = robot.y + 1
+      newState.direction = 'up'
+      validMove = true
+    }
+    if ( (dir == 'Down' || dir == 'ArrowDown' )&& robot.y > 0 ){
+      newState.y = robot.y - 1
+      newState.direction = 'down'
+      validMove = true
+    }
+    if (( dir == 'Left' || dir == 'ArrowLeft' )&& robot.x > 0 ){
+      newState.x = robot.x - 1
+      newState.direction = 'left'
+      validMove = true
+    }
+    if ( (dir == 'Right' || dir == 'ArrowRight' )&& robot.x < 4){
+      newState.x = robot.x + 1
+      newState.direction = 'right'
+      validMove = true
+    }
+
+    if (validMove) {
+      saveMove(newState);
+    } 
+
+    return validMove
   }
 
   const saveMove = async(newState: { direction?: string; x?: number; y?: number }) => { 
@@ -81,7 +130,7 @@ function Tabletop() {
       </div>
     <div className="grid grid-cols-4 gap-5">
       {ALLOWED_MOVES.map((move, idx) => (
-        <MoveButton key={idx} saveMove={saveMove} buttonName={move} robot={robot}/>
+        <MoveButton key={idx} validateMove={validateMove} buttonName={move}/>
       ))}
      <ReportButton robot={robot}/>
     </div>

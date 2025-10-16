@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import clickSound from '../../assets/sounds/click.wav'
 
-function MoveButton({buttonName, robot, saveMove}: {buttonName: string, robot: {direction?: string, x?: number, y?: number}, saveMove: (newState: { direction?: string; x?: number; y?: number }) => void}) {
+function MoveButton({buttonName, validateMove}: {buttonName: string, validateMove: (buttonName: string) => boolean}) {
   const [warning, showWarning] = useState(false)
   const clickSoundRef = useRef(new Audio(clickSound))
 
@@ -17,35 +17,9 @@ function MoveButton({buttonName, robot, saveMove}: {buttonName: string, robot: {
       clickSoundRef.current.play()
     }
 
-    if (robot.x === undefined || robot.y === undefined) {
-      warningInvalidMove()
-      return
-    }
-    
-    let validMove = false
-    const newState: { direction?: string; x?: number; y?: number } = {}
-
-    if ( buttonName == 'Up' && robot.y < 4 ){
-      newState.y = robot.y + 1
-      validMove = true
-    }
-    if ( buttonName == 'Down' && robot.y > 0 ){
-      newState.y = robot.y - 1
-      validMove = true
-    }
-    if ( buttonName == 'Left' && robot.x > 0 ){
-      newState.x = robot.x - 1
-      validMove = true
-    }
-    if ( buttonName == 'Right' && robot.x < 4){
-      newState.x = robot.x + 1
-      validMove = true
-    }
-    
-    if (validMove) {
-      newState.direction = buttonName.toLowerCase()
-      saveMove(newState);
-    } else {
+    const validMove = validateMove(buttonName)
+    console.log('validMove:', validMove);
+    if (!validMove) {
       warningInvalidMove()
     }
   }
