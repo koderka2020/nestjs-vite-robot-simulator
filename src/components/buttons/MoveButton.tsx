@@ -1,7 +1,9 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import clickSound from '../../assets/sounds/click.wav'
 
 function MoveButton({buttonName, robot, saveMove}: {buttonName: string, robot: {direction?: string, x?: number, y?: number}, saveMove: (newState: { direction?: string; x?: number; y?: number }) => void}) {
   const [warning, showWarning] = useState(false)
+  const clickSoundRef = useRef(new Audio(clickSound))
 
   const warningInvalidMove = () => {
     showWarning(true)
@@ -10,7 +12,11 @@ function MoveButton({buttonName, robot, saveMove}: {buttonName: string, robot: {
     }, 3000)
   }
   
-  const updateState = () => {
+  const handleClick = () => {
+    if (clickSoundRef.current) {
+      clickSoundRef.current.play()
+    }
+
     if (robot.x === undefined || robot.y === undefined) {
       warningInvalidMove()
       return
@@ -48,7 +54,7 @@ function MoveButton({buttonName, robot, saveMove}: {buttonName: string, robot: {
   
   return (
     <button 
-      onClick={updateState} 
+      onClick={handleClick} 
       className={`bg-cyan-600 text-gray-900 hover:bg-cyan-800 rounded-md ${warning ? 'px-2 py-2 bg-red-500 hover:bg-red-700' : 'px-7 py-2 hover:bg-cyan-800'}`}>
         {buttonMessage}
     </button>

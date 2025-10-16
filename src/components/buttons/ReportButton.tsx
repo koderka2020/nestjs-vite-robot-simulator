@@ -1,9 +1,15 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import clickSound from '../../assets/sounds/click.wav'
 
 function ReportButton({robot}: {robot: {direction?: string, x?: number, y?: number}}) {
   const [positionVisble, showPosition] = useState(false)
+  const clickSoundRef = useRef(new Audio(clickSound))
+
 
   const printCurrentCoordinates = () => {
+    if (clickSoundRef.current) {
+      clickSoundRef.current.play()
+    }
     showPosition(true)
     setTimeout(() => {
       showPosition(false)
