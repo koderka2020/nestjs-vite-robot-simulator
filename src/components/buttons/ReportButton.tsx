@@ -20,7 +20,7 @@ function ReportButton({robot}: {robot: {direction?: string, x?: number, y?: numb
   }
 
 
-  const buttonMessage = positionVisble ? `Position: ${robot.x}, ${robot.y}, ${robot.direction}` : 'Report'
+  const buttonMessage = positionVisble ? `Position: ${robot.x}, ${robot.y}, ${robot.direction}` : 'Report Position'
 
   return (
       <button 

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Square from './Square';
 import ReportButton from './buttons/ReportButton'
 import MoveButton from './buttons/MoveButton';
+import ResetButton from './buttons/ResetButton';
 
 // variables
 const SIZE = 5;
@@ -52,7 +53,7 @@ function Tabletop() {
   const validateMove = (dir:string) => {
     console.log('dir:', dir);
     let validMove = false
-    const newState: { direction?: string; x?: number; y?: number } = {}
+    const newState: { direction?: string; x?: number; y?: number } = {...robot}
 
     if (robot.y === undefined || robot.x === undefined) return false;
     if ( (dir == 'Up' || dir == 'ArrowUp') && robot.y < 4 ){
@@ -84,11 +85,16 @@ function Tabletop() {
   }
 
   const saveMove = async(newState: { direction?: string; x?: number; y?: number }) => { 
+    
     const update = {
         ...robot,
         ...newState,
       }
+
     setRobot(prev => ({...prev, ...update}))
+    console.log('newState:', newState);
+    if (newState.x === undefined || newState.y === undefined) return;
+
     try {
       const response = await fetch('http://localhost:3000/api/robot-history', {
         method: 'POST',
@@ -133,6 +139,7 @@ function Tabletop() {
         <MoveButton key={idx} validateMove={validateMove} buttonName={move}/>
       ))}
      <ReportButton robot={robot}/>
+     <ResetButton dropHistory={dropHistory}/>
     </div>
   </div>
   )
