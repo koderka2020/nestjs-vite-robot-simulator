@@ -11,6 +11,7 @@ export class RobotHistoryService {
   async create(
     createRobotHistoryDto: CreateRobotHistoryDto,
   ): Promise<RobotHistory> {
+
     try {
       return await this.prismaService.robotHistory.create({
         data: { ...createRobotHistoryDto },
@@ -23,6 +24,11 @@ export class RobotHistoryService {
   // get all records/movement's history from db:
   async findAll(): Promise<RobotHistory[]> {
     try {
+      //first check if there are any records in the database
+      const count = await this.prismaService.robotHistory.count();
+      if (count === 0) {
+        return [];
+      }
       return await this.prismaService.robotHistory.findMany();
     } catch (error) {
       throw new Error('Failed to get all robot history due to: ' + error);
@@ -32,6 +38,13 @@ export class RobotHistoryService {
   // find most recent recod/move info:
   async findOne(): Promise<any> {
     try {
+      // First check if there are any records in the database
+      const count = await this.prismaService.robotHistory.count();
+      if (count === 0) {
+        // Return null if no records exist
+        return {};
+      }
+
       return await this.prismaService.robotHistory.findFirst({
         orderBy: {
           created_at: 'desc',
@@ -51,6 +64,11 @@ export class RobotHistoryService {
   // delete history of robot's movements
   async remove() {
     try {
+      //first check if there are any records in the database
+      const count = await this.prismaService.robotHistory.count();
+      if (count === 0) {
+        return {};
+      }
       await this.prismaService.robotHistory.deleteMany();
     } catch (error) {
       throw new Error('Failed to remove all robot history due to: ' + error);

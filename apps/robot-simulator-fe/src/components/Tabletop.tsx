@@ -42,11 +42,14 @@ function Tabletop() {
   const getLatestPosition = async () => {
     fetch('http://localhost:3000/api/robot-history/latest')
       .then(response => response.json())
-      .then(data => setRobot({
+      .then(data => {
+        if ( !data ) return
+        setRobot({
         direction: data.direction,
         x: data.x,
         y: data.y,
-      }))
+      })
+    })
       .catch(error => console.error('Error:', error));
   }
 
