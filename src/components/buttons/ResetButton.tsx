@@ -1,5 +1,13 @@
+import { useRef } from 'react';
+import clickSound from '../../assets/sounds/click.wav'
+
 function ResetButton({dropHistory}: {dropHistory: (newState: { direction?: string; x?: number; y?: number }) => void}) {  
+  const clickSoundRef = useRef(new Audio(clickSound))
+    
   const handleClick = () => {
+    if (clickSoundRef.current) {
+      clickSoundRef.current.play()
+    }
     dropHistory({ x: undefined, y: undefined })
   }
   
