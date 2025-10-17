@@ -8,7 +8,16 @@ describe('RobotHistoryController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RobotHistoryController],
-      providers: [RobotHistoryService],
+      providers: [
+        {
+          provide: RobotHistoryService,
+          useValue: {
+            create: jest.fn(),
+            findOne: jest.fn(),
+            remove: jest.fn(),
+          },
+        },
+      ],
     }).compile();
 
     controller = module.get<RobotHistoryController>(RobotHistoryController);
