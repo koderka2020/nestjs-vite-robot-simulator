@@ -63,7 +63,7 @@ Output
 - Robot's design isn't 100% accurate - in this project was used icon from react library.
 - "Left" button moves arrow counter-clockwise and "Right" button moves arrow clockwise.
 - Improved user experience and accessibility by addition of "click" sound to all clickable components.
-- Considered but opted out of implementing due to small size of the project and time restrictions.
+- Considered implementing Context API state management but opted out due to small size of the project and time restrictions.
 
 ---
 
@@ -100,51 +100,45 @@ Output
 --- 
 ## Running Locally
 
-### Prerequisites
+## Prerequisites
 - Node.js v18+
-- npm or yarn
+- pnpm
 
-### Setup
+## Setup
+
+Clone repository:
+
 ```bash
-# Clone repository
 git clone <repo-url>
 cd nestjs-vite-robot-simulator
+```
 
-# Install dependencies
-npm install
-
-# Setup database
-# Add to your .env within robot-simulator-be directory:    DATABASE_URL="file:./dev.db"
-npm prisma migrate dev
-npm prisma generate
-
-# Start backend from the root of robot-simulator-be directory
-npm run start:dev
-
-# Start frontend from the root of robot-simulator-fe directory
-npm run dev
-
+Enable setup.sh execution:
+```
+chmod +x setup.sh
+```
+Run script in the root:
+```
+./setup.sh
+```
 App available at: http://localhost:5173
 
-# Start both from the root of nestjs-vite-robot-simulator 
-npm run dev
-```
 
-## View Database
+View Database:
 
 ```
-npm prisma studio
+pnpm prisma studio
 ```
-- Opens Prisma Studio at http://localhost:5555
+Opens Prisma Studio at http://localhost:5555
 
 ---
 ## Test Coverage
-Unit Tests Cover\
-Movement logic\
-Grid boundary validation\
-Rotations\
-REST API\
-State restoration\
+- Unit Tests Cover\
+- Movement logic\
+- Grid boundary validation\
+- Rotations\
+- REST API\
+- State restoration\
 
 ## Testing Tools
 Frontend:	Vitest + React Testing Library\
@@ -153,17 +147,17 @@ Backend:	Jest\
 ## Run Tests
 ### Frontend tests
 ```
-npm run test:ui
+pnpm run test:ui
 ```
 
 ### Backend tests
 ```
-npm run test:api
+pnpm run test:api
 ```
 
 ### All tests
 ```
-npm test
+pnpm test
 ```
 
 ## Manual Testing Checklist
