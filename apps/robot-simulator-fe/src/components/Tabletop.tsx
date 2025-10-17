@@ -122,11 +122,11 @@ function Tabletop() {
   }
     
   return (
-    <div className=" h-screen flex flex-col items-center justify-center">
+    <div className=" h-screen flex flex-col items-center justify-center" data-testid="tabletop-container">
       <div className="bg-gray-800 rounded-md px-5 py-3 "> 
         Click on the table to place the robot, use the buttons or arrows to move the robot
       </div>
-      <div className="flex flex-col-reverse m-7">
+      <div className="flex flex-col-reverse m-7" data-testid="tabletop-grid">
         {Array.from({ length: SIZE }, (_, idx) => (
           <div key={idx} className="flex flex-row">
           {Array.from({ length: SIZE }, (_, index) => (
