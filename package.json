@@ -3,7 +3,8 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently -n BACKEND,FRONTEND -c blue,green \"pnpm --filter robot-simulator-be dev\" \"pnpm --filter robot-simulator-fe dev\""
+    "dev": "concurrently -n BACKEND,FRONTEND -c blue,green \"pnpm --filter robot-simulator-be dev\" \"pnpm --filter robot-simulator-fe dev\"",
+    "test": "concurrently -n BACKEND,FRONTEND -c blue,green \"pnpm --filter robot-simulator-be test:e2e\" \"pnpm --filter robot-simulator-fe test\""
   },
   "devDependencies": {
     "concurrently": "^9.0.0"

@@ -74,6 +74,7 @@ Output
 - **Responsive UI**
 
 ### Functional
+- Better solution for displaying current robot's position (currently on the button)
 - Custom robot name & color
 - Select robot icon from UI "robot store" displayed left or right from the tabletop 
 - Replace default `LEFT/RIGHT/MOVE` buttons with **directional arrows** for better UX
@@ -132,27 +133,20 @@ pnpm prisma studio
 Opens Prisma Studio at http://localhost:5555
 
 ---
-## Test Coverage
-- Unit Tests Cover\
-- Movement logic\
-- Grid boundary validation\
-- Rotations\
-- REST API\
-- State restoration\
 
-## Testing Tools
-Frontend:	Vitest + React Testing Library\
-Backend:	Jest\
+## Testing Tools and Coverage
+Frontend:	Vitest + React Testing Library => Unit Tests, State restoration\
+Backend:	Jest/Supertest => REST API\
 
 ## Run Tests
 ### Frontend tests
 ```
-pnpm run test:ui
+pnpm test
 ```
 
 ### Backend tests
 ```
-pnpm run test:api
+pnpm test:e2e
 ```
 
 ### All tests
