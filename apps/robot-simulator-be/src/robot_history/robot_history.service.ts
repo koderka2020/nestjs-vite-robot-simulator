@@ -11,7 +11,6 @@ export class RobotHistoryService {
   async create(
     createRobotHistoryDto: CreateRobotHistoryDto,
   ): Promise<RobotHistory> {
-
     try {
       return await this.prismaService.robotHistory.create({
         data: { ...createRobotHistoryDto },
@@ -22,27 +21,33 @@ export class RobotHistoryService {
   }
 
   // get all records/movement's history from db:
-  async findAll(): Promise<RobotHistory[]> {
-    try {
-      //first check if there are any records in the database
-      const count = await this.prismaService.robotHistory.count();
-      if (count === 0) {
-        return [];
-      }
-      return await this.prismaService.robotHistory.findMany();
-    } catch (error) {
-      throw new Error('Failed to get all robot history due to: ' + error);
-    }
-  }
+  // async findAll(): Promise<RobotHistory[]> {
+  //   try {
+  //     //first check if there are any records in the database
+  //     const count = await this.prismaService.robotHistory.count();
+  //     if (count === 0) {
+  //       return [];
+  //     }
+  //     return await this.prismaService.robotHistory.findMany();
+  //   } catch (error) {
+  //     throw new Error('Failed to get all robot history due to: ' + error);
+  //   }
+  // }
 
   // find most recent recod/move info:
-  async findOne(): Promise<any> {
+  async findOne(): Promise<{
+    id?: string;
+    x?: number;
+    y?: number;
+    direction?: string;
+    created_at?: Date;
+  } | null> {
     try {
       // First check if there are any records in the database
       const count = await this.prismaService.robotHistory.count();
       if (count === 0) {
         // Return null if no records exist
-        return {};
+        return null;
       }
 
       return await this.prismaService.robotHistory.findFirst({
@@ -64,15 +69,10 @@ export class RobotHistoryService {
   // delete history of robot's movements
   async remove() {
     try {
-      //first check if there are any records in the database
-      const count = await this.prismaService.robotHistory.count();
-      if (count === 0) {
-        return {};
-      }
       await this.prismaService.robotHistory.deleteMany();
+      return { message: 'All robot history deleted successfully' };
     } catch (error) {
       throw new Error('Failed to remove all robot history due to: ' + error);
     }
-    return `This action removes all robot's movement history`;
   }
 }

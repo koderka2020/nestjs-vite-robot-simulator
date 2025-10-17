@@ -4,8 +4,8 @@ import {
   Post,
   Body,
   // Patch,
-  Param,
   Delete,
+  NotFoundException,
 } from '@nestjs/common';
 import { RobotHistoryService } from './robot_history.service';
 import { CreateRobotHistoryDto } from './dto/create-robot_history.dto';
@@ -20,14 +20,18 @@ export class RobotHistoryController {
     return this.robotHistoryService.create(createRobotHistoryDto);
   }
 
-  @Get()
-  findAll() {
-    return this.robotHistoryService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.robotHistoryService.findAll();
+  // }
 
   @Get('latest')
-  findOne() {
-    return this.robotHistoryService.findOne();
+  async findOne() {
+    const result = await this.robotHistoryService.findOne();
+    if (!result) {
+      throw new NotFoundException('No robot history found');
+    }
+    return result;
   }
 
   // @Patch(':id')
