@@ -19,24 +19,7 @@ function Tabletop() {
     x: undefined,
     y: undefined
   });
-
-  useEffect(() => {
-    getLatestPosition()
-  }, []);
-
-  useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
-
-      const validMove = validateMove(event.key as string)
-      if (!validMove) {
-        //here will go code for warning pop-up message, navigating player to click on the table
-       console.log('Invalid move!')
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyPress);
-    return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [robot]);
+  const [positionVisible, setPositionVisible] = useState(false);
 
   const getLatestPosition = async () => {
     fetch('http://localhost:3000/api/robot-history/latest')
@@ -53,6 +36,7 @@ function Tabletop() {
   }
 
   const validateMove = (dir:string) => {
+    hidePosition();
     let validMove = false
     const newState: { direction?: string; x?: number; y?: number } = {...robot}
     console.log('robot:', robot);
@@ -81,7 +65,31 @@ function Tabletop() {
     return validMove
   }
 
+  useEffect(() => {
+    getLatestPosition()
+  }, []);
+
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+
+      const validMove = validateMove(event.key as string)
+      if (!validMove) {
+        //here will go code for warning pop-up message, navigating player to click on the table
+       console.log('Invalid move!')
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [robot]);
+
+  const hidePosition = () => {
+    setPositionVisible(false);
+  };
+
   const updateDirection = (direction: {direction?: string}) => {
+    hidePosition();
     const newState = { ...robot, ...direction }
     setRobot(newState)
   }
@@ -112,6 +120,7 @@ function Tabletop() {
     }
 
   const dropHistory = async (newState: { x?: number; y?: number }) => {
+    hidePosition();
     fetch('http://localhost:3000/api/robot-history', {
       method: 'DELETE',
     })
@@ -139,7 +148,7 @@ function Tabletop() {
     <DirectionButton  updateDirection={updateDirection} buttonName="Left" y={robot.y} direction={robot.direction}/>
     <MoveButton robot={robot} validateMove={validateMove}/>
     <DirectionButton updateDirection={updateDirection} buttonName="Right" y={robot.y} direction={robot.direction}/>
-    <ReportButton robot={robot}/>
+    <ReportButton robot={robot} positionVisible={positionVisible} setPositionVisible={setPositionVisible}/>
     <ResetButton robot={robot} dropHistory={dropHistory}/>
     </div>
   </div>

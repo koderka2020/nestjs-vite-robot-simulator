@@ -21,7 +21,7 @@ function MoveButton({robot, validateMove}: {robot: RobotType, validateMove: Vali
     showWarning(true)
     setTimeout(() => {
       showWarning(false)
-    }, 3000)
+    }, 1000)
   }
   
   const handleClick = () => {
@@ -41,7 +41,7 @@ function MoveButton({robot, validateMove}: {robot: RobotType, validateMove: Vali
     <button 
       disabled={disabled}
       onClick={handleClick} 
-      className={`bg-cyan-600 text-gray-900 hover:bg-cyan-800 rounded-md ${warning ? 'px-2 py-2 bg-red-500 hover:bg-red-700' : 'px-7 py-2 hover:bg-cyan-800'}`}>
+      className={`bg-cyan-600 text-gray-900 rounded-md ${warning ? 'px-2 py-2 bg-red-500 hover:bg-red-700' : 'px-7 py-2 hover:bg-cyan-800'}`}>
         {buttonMessage}
     </button>
   )

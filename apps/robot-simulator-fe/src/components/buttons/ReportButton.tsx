@@ -2,8 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import clickSound from '../../assets/sounds/click.wav'
 import type { RobotType } from '../../types/types'
 
-function ReportButton({robot}: {robot:RobotType}) {
-  const [positionVisble, showPosition] = useState(false)
+function ReportButton({robot, positionVisible, setPositionVisible}: {robot:RobotType, positionVisible: boolean, setPositionVisible: (visible: boolean) => void}) {
   const [disabled, setDisabled] = useState(true)
   const clickSoundRef = useRef(new Audio(clickSound))
 
@@ -22,20 +21,20 @@ function ReportButton({robot}: {robot:RobotType}) {
     if (robot.x === undefined || robot.y === undefined) {
       return
     }
-    showPosition(true)
+    setPositionVisible(true)
     setTimeout(() => {
-      showPosition(false)
-    }, 3000)
+      setPositionVisible(false)
+    }, 2000)
   }
 
 
-  const buttonMessage = positionVisble ? `Position: ${robot.x}, ${robot.y}, ${robot.direction}` : 'Report Position'
+  const buttonMessage = positionVisible ? `x:${robot.x} y:${robot.y} direction:${robot.direction}` : 'Report Position'
 
   return (
       <button 
       disabled={disabled}
       onClick={printCurrentCoordinates} 
-      className="bg-gray-800 hover:bg-gray-700 border-cyan-600 border-1 col-start-2 col-end-3 rounded-lg px-8 py-2">
+      className="bg-gray-800 hover:bg-gray-700 border-cyan-600 border-1 col-start-2 col-end-3 rounded-lg py-2 w-40 text-center {positionVisble? px1 : px8}">
         {buttonMessage}
       </button>
   )

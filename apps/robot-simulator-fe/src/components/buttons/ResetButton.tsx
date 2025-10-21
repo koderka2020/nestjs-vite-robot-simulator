@@ -25,7 +25,7 @@ function ResetButton({robot, dropHistory}: {robot: RobotType, dropHistory: DropH
     <button 
       disabled={disabled} 
       onClick={handleClick} 
-      className="bg-red-900 hover:bg-red-700 border-cyan-600 border-1 col-start-2 col-end-3 rounded-lg px-8 py-2">
+      className="bg-red-900 hover:bg-red-700 border-cyan-600 border-1 col-start-2 col-end-3 rounded-lg py-2 w-40 text-center">
         Reset Table
     </button>
   )

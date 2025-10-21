@@ -74,7 +74,7 @@ Output
 - **Responsive UI**
 
 ### Functional
-- Better solution for displaying current robot's position (currently on the button)
+- More visible solution for displaying current robot's position (currently on the button) - popup message, etc
 - Custom robot name & color
 - Select robot icon from UI "robot store" displayed left or right from the tabletop 
 - Replace default `LEFT/RIGHT/MOVE` buttons with **directional arrows** for better UX
