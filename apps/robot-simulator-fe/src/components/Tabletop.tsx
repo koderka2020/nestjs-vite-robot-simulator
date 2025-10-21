@@ -137,7 +137,7 @@ function Tabletop() {
       </div>
     <div className="grid grid-cols-3 gap-5">
     <DirectionButton  updateDirection={updateDirection} buttonName="Left" y={robot.y} direction={robot.direction}/>
-    <MoveButton robot={robot} validateMove={validateMove} buttonName="Move"/>
+    <MoveButton robot={robot} validateMove={validateMove}/>
     <DirectionButton updateDirection={updateDirection} buttonName="Right" y={robot.y} direction={robot.direction}/>
     <ReportButton robot={robot}/>
     <ResetButton robot={robot} dropHistory={dropHistory}/>

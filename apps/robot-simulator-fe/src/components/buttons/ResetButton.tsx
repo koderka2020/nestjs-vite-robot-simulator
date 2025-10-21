@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import clickSound from '../../assets/sounds/click.wav'
+import type { RobotType, DropHistoryType } from '../../types/types'
 
-function ResetButton({robot, dropHistory}: {robot: {x?: number, y?: number}, dropHistory: (newState: { direction?: string; x?: number; y?: number }) => void}) {  
+function ResetButton({robot, dropHistory}: {robot: RobotType, dropHistory: DropHistoryType}) {  
   const clickSoundRef = useRef(new Audio(clickSound))
   const [disabled, setDisabled] = useState(true)
     

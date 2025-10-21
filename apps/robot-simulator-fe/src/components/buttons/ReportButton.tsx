@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
 import clickSound from '../../assets/sounds/click.wav'
+import type { RobotType } from '../../types/types'
 
-function ReportButton({robot}: {robot: {direction?: string, x?: number, y?: number}}) {
+function ReportButton({robot}: {robot:RobotType}) {
   const [positionVisble, showPosition] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const clickSoundRef = useRef(new Audio(clickSound))

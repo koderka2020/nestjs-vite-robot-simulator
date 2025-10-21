@@ -118,7 +118,7 @@ Enable setup.sh execution:
 ```
 chmod +x setup.sh
 ```
-Run script in the root:
+Run script in the root (to simplify the review of this type of project-interview assignment- this script will install dependencies and run the app locally in one step):
 ```
 ./setup.sh
 ```

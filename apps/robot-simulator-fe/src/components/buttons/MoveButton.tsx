@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
 import clickSound from '../../assets/sounds/click.wav'
+import type { RobotType } from '../../types/types'
 
-function MoveButton({robot, validateMove}: {robot: {x?: number, y?: number, direction?:string}, buttonName: string, validateMove: (direction: string) => boolean}) {
+type ValidateMoveType = (direction: string) => boolean
+
+function MoveButton({robot, validateMove}: {robot: RobotType, validateMove: ValidateMoveType}) {
   const [warning, showWarning] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const clickSoundRef = useRef(new Audio(clickSound))

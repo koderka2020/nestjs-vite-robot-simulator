@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react'
 import clickSound from '../../assets/sounds/click.wav'
 
-function DirectionButton({y, direction,  buttonName, updateDirection}: {y?:number, direction:string, buttonName: string, updateDirection: (direction: {direction?: string}) => void}) {
+type UpdateDirectionType = (direction: {direction?: string}) => void
+
+function DirectionButton({y, direction,  buttonName, updateDirection}: {y?:number, direction:string, buttonName: string, updateDirection: UpdateDirectionType}) {
   const [disabled, setDisabled] = useState(true)
   const clickSoundRef = useRef(new Audio(clickSound))
 
